@@ -1,0 +1,72 @@
+Exercises
+
+1.
+FUNCTION bubbleSort(collection)
+  REPEAT
+     SET swapped to false
+
+     FOR i = FIRST INDEX of collection to LAST INDEX of collection - 1
+       IF collection[i] > collection[i + 1] THEN
+         SET tmp to collection[i]
+         SET collection[i] to collection[i + 1]
+         SET collection[i + 1] to tmp
+         SET swapped to true
+       END IF
+     END FOR
+   UNTIL swapped is FALSE
+
+   RETURN collection
+ END FUNCTION
+
+2. Pseudocode:
+FUNCTION quickSort(collection)
+  IF collection length < 2 THEN
+    RETURN collection
+  ELSE
+    SET pivot = LAST INDEX of collection
+    FOR i = FIRST INDEX of collection to pivot-1
+      IF collection[i] > collection[pivot] THEN
+        SET tmp = collection[i]
+        FOR j = i to pivot-1
+          SET collection[i] = collection[i+1]
+        SET collection[pivot] = tmp
+        SET pivot = pivot -1
+        SET i = i - 1
+      END IF
+    END FOR
+    CALL quickSort WITH FIRST INDEX to pivot - 1 elements of collection RETURNING smallerCollection
+    CALL quickSort WITH pivot + 1 to LAST INDEX elements of collection RETURN biggerCollection
+    IF smallerCollection is NOT empty THEN
+      CONCATENATE smallerCollection and collection[pivot] RETURN collection
+    END IF
+    IF biggerCollection is NOT empty THEN
+      CONCATENATE collection and biggerCollection RETURN collection
+  END IF
+  RETURN collection
+END FUNCTION
+
+JS:
+function quickSort (ar) {
+  var pivot = ar.length-1;
+  if (ar.length < 2)
+    return ar;
+  for (var i=0; i<pivot; i++) {
+    if (ar[i] > ar[pivot]) {
+      var tmp = ar[i];
+      for (var j=i; j<pivot; j++) {
+        ar[j] = ar[j+1];
+      }
+      ar[pivot] = tmp;
+      pivot = pivot -1;
+      i = i-1;
+    }
+  }
+  var smaller = quickSort(ar.slice(0, pivot));
+  var bigger = quickSort(ar.slice(pivot+1, ar.length));
+  return smaller.concat(ar[pivot]).concat(bigger);
+}
+
+3. Merge sort and quick sort, are more efficient because each iterate through the entire collection once and then the remaining iteration are half smaller. Whereas with selection sort, bubble sort, and insertion sort, in the worst case the algorithm, after the first iteration, has to iterate through the entire collection almost as much as the entire collection.
+
+4. Bucket sort starts with empty bucket arrays, iterate through the input array and push elements in its bucket, sort each non-empty bucket and then merge buckets together into the original array.
+Ideal input would be numbers.
